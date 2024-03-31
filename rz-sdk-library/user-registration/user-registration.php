@@ -30,7 +30,7 @@ class UserRegistration {
         if($dbResult != null) {
             foreach($dbResult as $row) {
                 $userRegistration = new UserRegistrationModel();
-                $userRegistration->userId = $row[UserRegistrationEnum::ID->value];
+                $userRegistration->userId = $row[UserRegistrationEnum::REGI_ID->value];
                 $userRegistration->createdDate = $row[UserRegistrationEnum::CREATE_DATE->value];
                 $userRegistration->modifiedDate = $row[UserRegistrationEnum::MODIFIED_DATE->value];
                 $items[] = $userRegistration;
