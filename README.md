@@ -20,4 +20,4 @@ git status
 git rm -rf .idea;
 git commit -m "delete .idea";
 git push;
-```php-rzsdk-codeigniter
+```
