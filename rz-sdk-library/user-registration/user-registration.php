@@ -6,12 +6,13 @@ require_once("model/model-user-registration.php");
 ?>
 <?php
 use RzSDK\Database\SqliteConnection;
-use RzSDK\UniqueIntId;
+use RzSDK\Id\UniqueIntId;
+use RzSDK\DateTime\DateTime;
 use RzSDK\Model\User\Registration\UserRegistrationModel;
 use RzSDK\Model\User\Registration\UserRegistrationEnum;
 ?>
 <?php
-class UserRegistration {
+class UserRegistrationProcess {
     private SqliteConnection $sqliteConnection;
     private UniqueIntId $uniqueIntId;
     private UserRegistrationModel $userRegistrationModel;
@@ -49,7 +50,8 @@ class UserRegistration {
 
     public function insertSql(): string {
         $regiId = $this->uniqueIntId->getUserId();
-        $dateTime = date("Y-m-d H:i:s");
+        new DateTime();
+        $dateTime = DateTime::getCurrentDateTime();
         return "INSERT INTO {$this->userRegistrationModel->table} VALUES("
             . "'" . $regiId . "',"
             . " " . true . ","

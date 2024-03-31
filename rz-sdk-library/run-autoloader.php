@@ -3,8 +3,12 @@ namespace RzSDK\Autoloader;
 // defined("RZ_SDK_BASEPATH") or define("RZ_SDK_BASEPATH", trim(trim(__DIR__, "/")));
 // require_once(dirname(RZ_SDK_BASEPATH) . "/utils/autoloader/autoloader.php");
 defined("RZ_SDK_BASEPATH") or define("RZ_SDK_BASEPATH", trim(trim(__DIR__, "/")));
+defined("RZ_SDK_DIR_FILE_PATH") or define("RZ_SDK_DIR_FILE_PATH", "directory-path-file.json");
+?>
+<?php
 use RzSDK\Autoloader\Autoloader;
-
+?>
+<?php
 if(version_compare(PHP_VERSION, "5.4.0", "<")) {
     exit("The Rz SDK requires PHP version 5.4 or higher.");
 }
@@ -47,6 +51,9 @@ class RunAutoloader {
         require_once($filePath);
         //global $autoloader;
         $autoloader = new Autoloader($rootPath, self::dirList);
+        /* $dirPathFile = RZ_SDK_DIR_FILE_PATH;
+        $fileWriter = new FileAssist();
+        $fileWriter->write($dirPathFile, "data"); */
     }
 }
 new RunAutoloader(trim(trim(__DIR__, "/")));

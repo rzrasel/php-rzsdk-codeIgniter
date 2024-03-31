@@ -1,6 +1,7 @@
 <?php
-namespace RzSDK;
-
+namespace RzSDK\Id;
+?>
+<?php
 class UniqueIntId {
     //private currentMicrotime = round(microtime(true) * 1000);
     //private currentMicrotime;

@@ -2,7 +2,8 @@
 namespace RzSDK\Autoloader;
 defined("RZ_SDK_BASEPATH") OR exit("No direct script access allowed");
 defined("RZ_SDK_WRAPPER") OR exit("No direct script access allowed");
-
+?>
+<?php
 class AutoloaderHelper {
     private $fileNameList = array();
     private $existedFilePath = "";
@@ -45,13 +46,16 @@ class AutoloaderHelper {
         }
         if(!empty($dirtoryList)) {
             foreach($dirtoryList as $dirtoryItem) {
-                foreach($fileNameList as $fileNameItem) {
-                    $filePathList[] = $basePath . $dirtoryItem . "/" . $fileNameItem . $extension;
+                if(!empty($dirtoryItem)) {
+                    $dirtoryItem = $dirtoryItem. "/";
+                }
+                foreach($fileNameList as $fileName) {
+                    $filePathList[] = $basePath . $dirtoryItem . $fileName . $extension;
                 }
             }
         } else {
-            foreach($fileNameList as $fileNameItem) {
-                $filePathList[] = $basePath . $fileNameItem . $extension;
+            foreach($fileNameList as $fileName) {
+                $filePathList[] = $basePath . $fileName . $extension;
             }
         }
         foreach($filePathList as $filePathItem) {
@@ -59,7 +63,7 @@ class AutoloaderHelper {
                 /* echo "<font color=\"green\">File exists:</font> <b><font color=\"#404079\">{$filePathItem}</font></b>";
                 echo "<br />"; */
                 $this->existedFilePath = $filePathItem;
-                return;
+                //return;
             } else {
                 /* echo "<font color=\"red\">Error file not exsits:</font> <b><font color=\"#7676a7\">{$filePathItem}</font></b>";
                 echo "<br />"; */
@@ -75,3 +79,4 @@ class AutoloaderHelper {
         //
     } */
 }
+?>

@@ -1,6 +1,8 @@
 <?php
 namespace RzSDK\Model\User\Registration;
 require_once("enum-user-registration.php");
+?>
+<?php
 use RzSdk\Model\User\Registration\UserRegistrationEnum;
 
 class UserRegistrationModel {
