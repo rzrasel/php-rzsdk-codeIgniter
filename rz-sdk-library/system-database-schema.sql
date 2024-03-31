@@ -2,6 +2,7 @@
 
 DROP TABLE IF EXISTS user_password;
 DROP TABLE IF EXISTS user_password_meta;
+DROP TABLE IF EXISTS user_login_key;
 DROP TABLE IF EXISTS user_identity;
 DROP TABLE IF EXISTS user_registration;
 DROP TABLE IF EXISTS enrollment_type;
@@ -84,7 +85,39 @@ CREATE TABLE IF NOT EXISTS user_password (
     CONSTRAINT fk_user_password_user_pass_meta_id FOREIGN KEY (user_pass_meta_id) REFERENCES user_password_meta(user_pass_meta_id)
 );
 
+-- DROP TABLE IF EXISTS user_login_key;
 
+CREATE TABLE IF NOT EXISTS user_login_key (
+    user_identity_id        BIGINT(20) NOT NULL,
+    user_login_key_id       BIGINT(20) NOT NULL,
+    user_login_key          TEXT NOT NULL,
+    user_login_key_status   BOOLEAN NOT NULL DEFAULT TRUE,
+    modified_by             BIGINT(20) NOT NULL,
+    created_by              BIGINT(20) NOT NULL,
+    modified_date           DATETIME NOT NULL,
+    created_date            DATETIME NOT NULL,
+    CONSTRAINT pk_user_login_key_user_login_key_id PRIMARY KEY (user_login_key_id),
+    CONSTRAINT fk_user_login_key_user_identity_id FOREIGN KEY (user_identity_id) REFERENCES user_identity(user_identity_id)
+);
+
+
+/*
 
 -- https://www.facebook.com/reel/971549021305245
 -- https://www.facebook.com/reel/955959129506553
+
+Android Compose: Create a simple MVVM project with basic four layers
+https://medium.com/@anteprocess/android-compose-create-a-simple-mvvm-project-with-basic-four-layers-776b586d00af
+Building an Android App with Jetpack Compose, Retrofit, and MVVM Architecture
+https://medium.com/@jecky999/building-an-android-app-with-jetpack-compose-retrofit-and-mvvm-architecture-12a5e03eb03a
+Jetpack Compose Android App with MVVM Architecture and Retrofit - API Integration
+https://medium.com/@dheerubhadoria/jetpack-compose-android-app-with-mvvm-architecture-and-retrofit-api-integration-4eb61ca6fbf2
+
+Retrofit with MVVM in Jetpack Compose
+https://saurabhjadhavblogs.com/retrofit-with-mvvm-in-jetpack-compose
+Compose-MVVM-Retrofit-ViewMode-LiveData-Complete-Example-Android-App
+https://github.com/dheeraj-bhadoria/Compose-MVVM-Retrofit-ViewMode-LiveData-Complete-Example-Android-App
+Android-Kotlin-Mvvm-Dagger-Retrofit
+https://github.com/GeekySingh/Android-Kotlin-Mvvm-Dagger-Retrofit
+
+*/
