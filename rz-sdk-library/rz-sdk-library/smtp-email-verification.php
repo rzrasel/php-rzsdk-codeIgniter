@@ -1,8 +1,8 @@
 <?php
 namespace RzSDK\Validation;
+require_once("smtp-email-verification-exception.php");
 ?>
 <?php
-require_once("smtp-email-verification-exception.php");
 use RzSDK\Validation\SmtpVerifyEmailException;
 ?>
 <?php
@@ -383,7 +383,7 @@ class SmtpEmailVerification {
 }
 ?>
 <?php
-
+/*
 // Include library file
 //require_once 'VerifyEmail.class.php';
 
@@ -408,10 +408,10 @@ $email = "emailrzrasel@gmail.com";
 // Check if email is valid and exist
 if($mail->check($email)) {
     echo "Email &lt;" . $email . "&gt; is exist!";
-}elseif(SmtpEmailVerification::validate($email)) {
+} else if(SmtpEmailVerification::validate($email)) {
     echo "Email &lt;" . $email . "&gt; is valid, but not exist!";
-}else{
+} else {
     echo "Email &lt;" . $email . "&gt; is not valid and not exist!";
 }
-
+*/
 ?>
