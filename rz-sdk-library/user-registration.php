@@ -1,7 +1,7 @@
 <?php
 namespace RzSDK\User\Registration;
 require_once("run-autoloader.php");
-require_once("user-registration/user-registration.php");
+require_once("user-registration/user-registration-process.php");
 ?>
 <?php
 use \RzSDK\Model\User\Registration;
