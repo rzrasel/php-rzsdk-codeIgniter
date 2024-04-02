@@ -50,7 +50,6 @@ class UserRegistrationProcess {
 
     public function insertSql(): string {
         $regiId = $this->uniqueIntId->getUserId();
-        new DateTime();
         $dateTime = DateTime::getCurrentDateTime();
         return "INSERT INTO {$this->userRegistrationModel->table} VALUES("
             . "'" . $regiId . "',"

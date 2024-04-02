@@ -2,7 +2,8 @@
 namespace RzSDK\Encryption;
 defined("RZ_SDK_BASEPATH") OR exit("No direct script access allowed");
 defined("RZ_SDK_WRAPPER") OR exit("No direct script access allowed");
-
+?>
+<?php
 class PasswordEncryption {
     function __construct() {
         /* echo __NAMESPACE__ . " ---- " . __CLASS__ . " ---- " . __METHOD__;

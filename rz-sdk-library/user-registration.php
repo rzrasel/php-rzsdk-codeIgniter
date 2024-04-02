@@ -25,7 +25,4 @@ foreach($items as $item) {
 }
 ?>
 <!--
-
-
-
 -->
