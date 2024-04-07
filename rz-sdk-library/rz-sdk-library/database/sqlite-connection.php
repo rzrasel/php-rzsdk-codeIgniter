@@ -20,7 +20,11 @@ class SqliteConnection {
         $this->sqliteFile = $dbPath;
         //|SQLite PDO Connection|--------------------------------|
         if ($this->pdo == null) {
-            $this->pdo = new \PDO("sqlite:" . $this->sqliteFile);
+            try {
+                $this->pdo = new \PDO("sqlite:" . $this->sqliteFile);
+            } catch(\PDOException $e) {
+                die($e->getMessage());
+            }
         }
         /*if($this->pdo == null) {
             $this->pdo = new SQLite3('sqlite3db.db');
@@ -30,8 +34,9 @@ class SqliteConnection {
 
     //|-----------------------|SQL QUERY|------------------------|
     public function query($sqlQuery) {
+        $query = preg_replace("/escape_string\((.*?)\)/", $this->escapeString("$1"), $sqlQuery);
         if ($this->pdo != null) {
-            return $this->pdo->query($sqlQuery);
+            return $this->pdo->query($query);
         }
         return null;
     }
@@ -39,6 +44,42 @@ class SqliteConnection {
     public function closeConnection() {
         $this->pdo = null;
     }
+
+    function escapeString($string, $quotestyle='both') {
+
+		if( function_exists("sqlite_escape_string") ){
+			$string = sqlite_escape_string($string);
+			$string = str_replace("''","'",$string); #- no quote escaped so will work like with no sqlite_escape_string available
+		}
+		else{
+			$escapes = array("\x00", "\x0a", "\x0d", "\x1a", "\x09","\\");
+			$replace = array('\0',   '\n',    '\r',   '\Z' , '\t',  "\\\\");
+		}
+		switch(strtolower($quotestyle)){
+			case 'double':
+			case 'd':
+			case '"':
+				$escapes[] = '"';
+				$replace[] = '\"';
+				break;
+			case 'single':
+			case 's':
+			case "'":
+				$escapes[] = "'";
+				$replace[] = "''";
+				break;
+			case 'both':
+			case 'b':
+			case '"\'':
+			case '\'"':
+				$escapes[] = '"';
+				$replace[] = '\"';
+				$escapes[] = "'";
+				$replace[] = "''";
+				break;
+		}
+		return str_replace($escapes,$replace,$string);
+	}
 }
 ?>
 <?php
@@ -55,4 +96,9 @@ class SqliteConnection {
         return $this->pdo;
     }
 }*/
+/*
+
+https://github.com/lampaa/SQLite/blob/master/sqlite.class.php#L126
+
+*/
 ?>
