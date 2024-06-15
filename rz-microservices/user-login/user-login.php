@@ -9,12 +9,11 @@ use RzSDK\Response\Info;
 use RzSDK\Response\InfoType;
 use RzSDK\Model\User\Login\UserRegistrationRequestModel;
 use RzSDK\User\Login\UserLoginRegexValidation;
-use RzSDK\User\UserAuthType;
-use function RzSDK\User\getUserAuthTypeByValue;
+use RzSDK\User\Type\UserAuthType;
+use function RzSDK\User\Type\getUserAuthTypeByValue;
 use RzSDK\Database\SqliteConnection;
-use RzSDK\Import\DebugLog;
+use RzSDK\Log\DebugLog;
 
-use function RzSDK\Import\logPrint;
 use function RzSDK\Response\getInfoTypeByValue;
 
 ?>
@@ -96,6 +95,9 @@ class UserLogin {
                     $this->response($bodyData, new Info("Successfully logged in", InfoType::SUCCESS), $dataModel);
                     return true;
                 }
+            } else if($infoType == InfoType::INFO) {
+                $this->response(array("redirect" => true, "page" => "registration"), new Info("Error! Email or password not matched", InfoType::ERROR), $dataModel);
+                return true;
             }
         }
         return false;

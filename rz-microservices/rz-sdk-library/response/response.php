@@ -31,6 +31,7 @@ class Info {
 enum InfoType: string {
     case ALERT      = "alert";
     case ERROR      = "error";
+    case INFO      = "info";
     case MESSAGE    = "message";
     case SUCCESS    = "success";
     case WARNING    = "warning";

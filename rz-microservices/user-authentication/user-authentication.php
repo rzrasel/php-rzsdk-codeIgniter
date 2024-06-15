@@ -10,7 +10,7 @@ use RzSDK\Database\SqliteConnection;
 use RzSDK\Model\User\Authentication\UserRegistrationRequestModel;
 use RzSDK\User\Authentication\UserRegistrationRegexValidation;
 
-use function RzSDK\Import\logPrint;
+use RzSDK\Log\DebugLog;
 
 ?>
 <?php
@@ -32,6 +32,7 @@ class UserAuthentication {
             if(!$this->regexValidation($userRegiRequestModel)) {
                 return;
             }
+            //DebugLog::log($this->getDbUser($userRegiRequestModel));
             if($this->getDbUser($userRegiRequestModel)) {
                 return;
             }
@@ -49,7 +50,7 @@ class UserAuthentication {
         $dataModel = $userRegiRequestModel->toArrayKeyMapping($userRegiRequestModel);
         $connection = new SqliteConnection($dbFullPath);
         $sqlQuery = "SELECT * FROM user AS user "
-        . "INNER JOIN auth_password AS password "
+        . "INNER JOIN user_password AS password "
         . "ON"
         . " user.user_id = password.user_id "
         . "WHERE"
@@ -66,13 +67,18 @@ class UserAuthentication {
                 $dbData["email"]    = $row["email"];
                 $dbData["password"] = $row["password"];
             }
-            //logPrint($dbData);
+            //DebugLog::log("debug_log_print");
             if(!empty($dbData)) {
-                //echo "user_registration table is empty";
+                //DebugLog::log("debug_log_print");
                 $this->response($dbData, new Info("Successful user found", InfoType::SUCCESS), $dataModel);
                 return true;
+            } else {
+                //DebugLog::log("debug_log_print");
+                $this->response($dbData, new Info("Error user not found", InfoType::INFO), $dataModel);
+                return false;
             }
         }
+        //DebugLog::log("debug_log_print");
         $this->response($dbData, new Info("Error user not found", InfoType::ERROR), $dataModel);
         return false;
     }

@@ -20,6 +20,8 @@ echo "getBaseUrl() " . SiteUrl::getBaseUrl();
 echo "<br />";
 echo "<br />"; */
 //$curlUserRegistration = new CurlUserRegistration(SiteUrl::getBaseUrl());
+//DebugLog::log(get_object_vars($curlUserRegistration));
+//$curlUserRegistration->example();
 ?>
 <?php
 $curlUserLogin = new CurlUserLogin(SiteUrl::getBaseUrl());

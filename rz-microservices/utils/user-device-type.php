@@ -2,18 +2,17 @@
 namespace RzSDK\User\Type;
 ?>
 <?php
-enum UserAuthType: string {
-    case EMAIL      = "email";
-    case FACEBOOK   = "facebook";
-    case GOOGLE     = "google";
-    case MOBILE     = "mobile";
+enum UserDeviceType: string {
+    case ANDROID    = "android";
+    case IOS        = "ios";
+    case WINDOWS    = "windows";
 }
 ?>
 <?php
 //https://github.com/php/php-src/issues/9352
 //Retrieving an enum case by its name
-function getUserAuthTypeByValue($value) {
-    foreach (UserAuthType::cases() as $case) {
+function getUserDeviceTypeByValue($value) {
+    foreach (UserDeviceType::cases() as $case) {
         /* if ($case->name === $enumName) {
             return $case;
         } */

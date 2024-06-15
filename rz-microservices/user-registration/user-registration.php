@@ -9,10 +9,10 @@ use RzSDK\Response\Info;
 use RzSDK\Response\InfoType;
 use RzSDK\Model\User\Registration\UserRegistrationRequestModel;
 use RzSDK\User\Registration\UserRegistrationRegexValidation;
-use RzSDK\User\UserAuthType;
-use function RzSDK\User\getUserAuthTypeByValue;
+use RzSDK\User\Type\UserAuthType;
+use function RzSDK\User\Type\getUserAuthTypeByValue;
 use RzSDK\Database\SqliteConnection;
-use function RzSDK\Import\logPrint;
+use RzSDK\Log\DebugLog;
 
 ?>
 <?php
@@ -89,8 +89,14 @@ class UserRegistration {
         $dateTime = date("Y-m-d H:i:s");
         $sqlQuery = "INSERT INTO user_registration VALUES("
         . "'" . $userId . "',"
-        . "'" . $userRegiRequestModel->email . "',"
+        . " '" . $userRegiRequestModel->email . "',"
         . " " . true . ","
+        . " " . true . ","
+        //regi_date
+        . " '" . $dateTime . "',"
+        . " '" . $userRegiRequestModel->deviceType . "',"
+        . " '" . $userRegiRequestModel->authType . "',"
+        . " '" . $userRegiRequestModel->agentType . "',"
         . " '" . $userId . "',"
         . " '" . $userId . "',"
         . " '" . $dateTime . "',"
@@ -112,7 +118,7 @@ class UserRegistration {
         $dbResult = $connection->query($sqlQuery);
         //https://reintech.io/blog/php-password-hashing-securely-storing-verifying-passwords
         $password = password_hash($userRegiRequestModel->password, PASSWORD_DEFAULT);
-        $sqlQuery = "INSERT INTO auth_password VALUES("
+        $sqlQuery = "INSERT INTO user_password VALUES("
         . "'" . $userId . "',"
         . "'" . $password . "',"
         . " " . true . ","

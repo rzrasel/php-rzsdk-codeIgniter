@@ -3,8 +3,7 @@ namespace RzSDK\User\Login;
 ?>
 <?php
 use RzSDK\Curl\Curl;
-use RzSDK\Import\DebugLog;
-use function RzSDK\Import\logPrint;
+use RzSDK\Log\DebugLog;
 ?>
 <?php
 class CurlUserLogin {
@@ -23,12 +22,12 @@ class CurlUserLogin {
         $curl = new Curl($url);
         $result = $curl->exec(true, $this->getData()) . "";
         $result = json_decode($result, true);
-        //logPrint($result);
+        //DebugLog::log($result);
         unset($result["info"]);
         unset($result["error"]);
         DebugLog::log($result);
         /* $responseData = json_decode($result["body"], true);
-        logPrint($responseData); */
+        DebugLog::log($responseData); */
     }
 
     private function getData() {
@@ -36,7 +35,7 @@ class CurlUserLogin {
             "device_type"   => "android",
             "auth_type"     => "email",
             "agent_type"    => "android_app",
-            "user_email"    => "email@gmail.com",
+            "user_email"    => "emafil@gmail.com",
             "password"      => "123456aB#",
         );
     }

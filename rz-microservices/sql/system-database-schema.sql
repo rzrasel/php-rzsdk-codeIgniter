@@ -3,12 +3,17 @@
 
 DROP TABLE IF EXISTS user_registration;
 DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS auth_password;
+DROP TABLE IF EXISTS user_password;
 
 CREATE TABLE IF NOT EXISTS user_registration (
     user_regi_id    BIGINT(20) NOT NULL,
     email           TEXT NOT NULL,
     status          BOOLEAN NOT NULL DEFAULT TRUE,
+    is_verified     BOOLEAN NOT NULL DEFAULT FALSE,
+    regi_date       DATETIME NOT NULL,
+    device_type     VARCHAR(32) NOT NULL,
+    auth_type       VARCHAR(32) NOT NULL,
+    agent_type      VARCHAR(32) NOT NULL,
     modified_by     BIGINT(20) NOT NULL,
     created_by      BIGINT(20) NOT NULL,
     modified_date   DATETIME NOT NULL,
@@ -31,7 +36,7 @@ CREATE TABLE IF NOT EXISTS user (
 
 -- INSERT INTO user VALUES("171187607072497731", "email@gmail.com", TRUE, "171187607072497731", "171187607072497731", "2024-03-31 15:35:31", "2024-03-31 15:35:31");
 
-CREATE TABLE IF NOT EXISTS auth_password (
+CREATE TABLE IF NOT EXISTS user_password (
     user_id         BIGINT(20) NOT NULL,
     password        TEXT NOT NULL,
     status          BOOLEAN NOT NULL DEFAULT TRUE,
@@ -39,7 +44,7 @@ CREATE TABLE IF NOT EXISTS auth_password (
     created_by      BIGINT(20) NOT NULL,
     modified_date   DATETIME NOT NULL,
     created_date    DATETIME NOT NULL,
-    CONSTRAINT pk_auth_password_user_id PRIMARY KEY (user_id)
+    CONSTRAINT pk_user_password_user_id PRIMARY KEY (user_id)
 );
 
 
