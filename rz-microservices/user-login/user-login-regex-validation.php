@@ -1,5 +1,5 @@
 <?php
-namespace RzSDK\User\Registration;
+namespace RzSDK\User\Login;
 ?>
 <?php
 require_once("../include.php");
@@ -9,10 +9,10 @@ require_once("include.php");
 use RzSDK\Response\Response;
 use RzSDK\Response\Info;
 use RzSDK\Response\InfoType;
-use RzSDK\Model\User\Registration\UserRegistrationRequestModel;
+use RzSDK\Model\User\Login\UserRegistrationRequestModel;
 ?>
 <?php
-class UserRegistrationRegexValidation {
+class UserLoginRegexValidation {
     public function __construct() {
         //$this->execute();
     }

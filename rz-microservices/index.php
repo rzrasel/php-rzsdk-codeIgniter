@@ -3,8 +3,13 @@ require_once("include.php");
 ?>
 <?php
 
+use RzSDK\Import\DebugLog;
 use RzSDK\URL\SiteUrl;
 use RzSDK\User\Registration\CurlUserRegistration;
+use RzSDK\User\Login\CurlUserLogin;
+
+use function RzSDK\Import\logPrint;
+
 ?>
 <?php
 /* echo "getFullUrl() " . SiteUrl::getFullUrl();
@@ -14,7 +19,10 @@ echo "<br />";
 echo "getBaseUrl() " . SiteUrl::getBaseUrl();
 echo "<br />";
 echo "<br />"; */
-$curlUserRegistration = new CurlUserRegistration(SiteUrl::getBaseUrl());
+//$curlUserRegistration = new CurlUserRegistration(SiteUrl::getBaseUrl());
+?>
+<?php
+$curlUserLogin = new CurlUserLogin(SiteUrl::getBaseUrl());
 ?>
 <?php
 echo "<br />";
@@ -27,7 +35,7 @@ echo "<br />";
     <br />
     <br />
     <!-- <a href="<?= dirname($_SERVER["PHP_SELF"]) ?>/user-registration.php">User Registration</a> -->
-    <a href="http://localhost/php-rzsdk-codeigniter/rz-microservices/user-registration/user-registration.php">Laptop User Registration</a>
+    <a href="<?= ROOT_URL; ?>">Laptop User Registration</a>
     <br />
     <br />
     <a href="http://localhost/php-rzsdk-codeigniter/rz-microservices/user-registration/user-registration.php">Desktop User Registration Process</a>

@@ -3,6 +3,7 @@
 
 DROP TABLE IF EXISTS user_registration;
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS auth_password;
 
 CREATE TABLE IF NOT EXISTS user_registration (
     user_regi_id    BIGINT(20) NOT NULL,
@@ -15,7 +16,7 @@ CREATE TABLE IF NOT EXISTS user_registration (
     CONSTRAINT pk_user_registration_user_regi_id PRIMARY KEY (user_regi_id)
 );
 
-INSERT INTO user_registration VALUES("171187607072497731", "eamil@gmail.com", TRUE, "171187607072497731", "171187607072497731", "2024-03-31 15:35:31", "2024-03-31 15:35:31");
+-- INSERT INTO user_registration VALUES("171187607072497731", "email@gmail.com", TRUE, "171187607072497731", "171187607072497731", "2024-03-31 15:35:31", "2024-03-31 15:35:31");
 
 CREATE TABLE IF NOT EXISTS user (
     user_id         BIGINT(20) NOT NULL,
@@ -28,7 +29,18 @@ CREATE TABLE IF NOT EXISTS user (
     CONSTRAINT pk_user_user_id PRIMARY KEY (user_id)
 );
 
-INSERT INTO user VALUES("171187607072497731", "eamil@gmail.com", TRUE, "171187607072497731", "171187607072497731", "2024-03-31 15:35:31", "2024-03-31 15:35:31");
+-- INSERT INTO user VALUES("171187607072497731", "email@gmail.com", TRUE, "171187607072497731", "171187607072497731", "2024-03-31 15:35:31", "2024-03-31 15:35:31");
+
+CREATE TABLE IF NOT EXISTS auth_password (
+    user_id         BIGINT(20) NOT NULL,
+    password        TEXT NOT NULL,
+    status          BOOLEAN NOT NULL DEFAULT TRUE,
+    modified_by     BIGINT(20) NOT NULL,
+    created_by      BIGINT(20) NOT NULL,
+    modified_date   DATETIME NOT NULL,
+    created_date    DATETIME NOT NULL,
+    CONSTRAINT pk_auth_password_user_id PRIMARY KEY (user_id)
+);
 
 
 

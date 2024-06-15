@@ -7,14 +7,14 @@ use RzSDK\Response\Response;
 use RzSDK\Response\Info;
 use RzSDK\Response\InfoType;
 use RzSDK\Database\SqliteConnection;
-use RzSDK\Model\User\UserRegistrationRequestModel;
-use RzSDK\User\UserRegistrationRegexValidation;
+use RzSDK\Model\User\Authentication\UserRegistrationRequestModel;
+use RzSDK\User\Authentication\UserRegistrationRegexValidation;
 
 use function RzSDK\Import\logPrint;
 
 ?>
 <?php
-class User {
+class UserAuthentication {
     public function __construct() {
         $this->execute();
     }
@@ -48,48 +48,25 @@ class User {
         $dbFullPath = "../" . DB_PATH . "/" . DB_FILE;
         $dataModel = $userRegiRequestModel->toArrayKeyMapping($userRegiRequestModel);
         $connection = new SqliteConnection($dbFullPath);
-        $sqlQuery = "SELECT * "
-        . "FROM user "
+        $sqlQuery = "SELECT * FROM user AS user "
+        . "INNER JOIN auth_password AS password "
+        . "ON"
+        . " user.user_id = password.user_id "
         . "WHERE"
-        . " email = '{$userRegiRequestModel->email}'"
+        . " user.email = '{$userRegiRequestModel->email}'"
+        . " AND user.status = '1'"
+        . " AND password.status = '1'"
         . ";";
+        //echo $sqlQuery;
         $dbData = array();
         $dbResult = $connection->query($sqlQuery);
         if($dbResult != null) {
             foreach($dbResult as $row) {
-                $dbData["user_id"]          = $row["user_id"];
-                $dbData["email"]            = $row["email"];
-                $dbData["status"]           = $row["status"];
-                $dbData["modified_by"]      = $row["modified_by"];
-                $dbData["created_by"]       = $row["created_by"];
-                $dbData["modified_date"]    = $row["modified_date"];
-                $dbData["created_date"]     = $row["created_date"];
+                $dbData["user_id"]  = $row["user_id"];
+                $dbData["email"]    = $row["email"];
+                $dbData["password"] = $row["password"];
             }
-            //echo $sqlQuery;
-            if(!empty($dbData)) {
-                //echo "user table is empty";
-                $this->response($dbData, new Info("Successful user found", InfoType::SUCCESS), $dataModel);
-                return true;
-            }
-        }
-        //
-        $sqlQuery = "SELECT * "
-        . "FROM user_registration "
-        . "WHERE"
-        . " email = '{$userRegiRequestModel->email}'"
-        . ";";
-        $dbResult = $connection->query($sqlQuery);
-        if($dbResult != null) {
-            foreach($dbResult as $row) {
-                $dbData["user_regi_id"]     = $row["user_regi_id"];
-                $dbData["email"]            = $row["email"];
-                $dbData["status"]           = $row["status"];
-                $dbData["modified_by"]      = $row["modified_by"];
-                $dbData["created_by"]       = $row["created_by"];
-                $dbData["modified_date"]    = $row["modified_date"];
-                $dbData["created_date"]     = $row["created_date"];
-            }
-            //echo $sqlQuery;
+            //logPrint($dbData);
             if(!empty($dbData)) {
                 //echo "user_registration table is empty";
                 $this->response($dbData, new Info("Successful user found", InfoType::SUCCESS), $dataModel);
@@ -110,5 +87,5 @@ class User {
 }
 ?>
 <?php
-new User();
+$userAuthentication = new UserAuthentication();
 ?>
