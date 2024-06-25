@@ -35,7 +35,7 @@ class CurlUserLogin {
             "device_type"   => "android",
             "auth_type"     => "email",
             "agent_type"    => "android_app",
-            "user_email"    => "emafil@gmail.com",
+            "user_email"    => "email@gmail.com",
             "password"      => "123456aB#",
         );
     }

@@ -24,7 +24,9 @@ class Curl {
         }
         // Set the url path we want to call
         curl_setopt($this->curl, CURLOPT_URL, $this->url);
+        curl_setopt($this->curl, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
         // Make it so the data coming back is put into a string
+        curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
         // Insert the data
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $postData);

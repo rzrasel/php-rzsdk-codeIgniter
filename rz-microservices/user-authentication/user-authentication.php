@@ -9,6 +9,7 @@ use RzSDK\Response\InfoType;
 use RzSDK\Database\SqliteConnection;
 use RzSDK\Model\User\Authentication\UserRegistrationRequestModel;
 use RzSDK\User\Authentication\UserRegistrationRegexValidation;
+use RzSDK\DatabaseSpace\DbUserTable;
 
 use RzSDK\Log\DebugLog;
 
@@ -49,8 +50,10 @@ class UserAuthentication {
         $dbFullPath = "../" . DB_PATH . "/" . DB_FILE;
         $dataModel = $userRegiRequestModel->toArrayKeyMapping($userRegiRequestModel);
         $connection = new SqliteConnection($dbFullPath);
-        $sqlQuery = "SELECT * FROM user AS user "
-        . "INNER JOIN user_password AS password "
+        $tableUser = DbUserTable::$userInfo;
+        $tableUserPass = DbUserTable::$userPassword;
+        $sqlQuery = "SELECT * FROM {$tableUser} AS user "
+        . "INNER JOIN {$tableUserPass} AS password "
         . "ON"
         . " user.user_id = password.user_id "
         . "WHERE"

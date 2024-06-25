@@ -6,8 +6,21 @@ $baseInclude = "rz-sdk-library/";
 require_once($baseInclude . "curl/curl.php");
 require_once($baseInclude . "database/sqlite-connection.php");
 require_once($baseInclude . "debug-log/debug-log.php");
+require_once($baseInclude . "detect-client/client-device.php");
+require_once($baseInclude . "detect-client/client-ip.php");
 require_once($baseInclude . "response/response.php");
 require_once($baseInclude . "utils/site-url.php");
+?>
+<?php
+$baseInclude = "table-space/";
+require_once($baseInclude . "db-type.php");
+require_once($baseInclude . "db-user-table.php");
+require_once($baseInclude . "user-registration-table.php");
+require_once($baseInclude . "user-registration-table-query.php");
+require_once($baseInclude . "user-info-table.php");
+require_once($baseInclude . "user-info-table-query.php");
+require_once($baseInclude . "user-password-table.php");
+require_once($baseInclude . "user-password-table-query.php");
 ?>
 <?php
 $baseInclude = "user/";
@@ -21,6 +34,7 @@ require_once($baseInclude . "user-auth-type.php");
 $baseInclude = "";
 require_once($baseInclude . "curl-user-login.php");
 require_once($baseInclude . "curl-user-registration.php");
+require_once($baseInclude . "gen-database-schema.php");
 ?>
 <?php
 use RzSDK\URL\SiteUrl;

@@ -12,12 +12,17 @@ use RzSDK\User\Registration\UserRegistrationRegexValidation;
 use RzSDK\User\Type\UserAuthType;
 use function RzSDK\User\Type\getUserAuthTypeByValue;
 use RzSDK\Database\SqliteConnection;
+use RzSDK\Device\ClientDevice;
+use RzSDK\Device\ClientIp;
+use RzSDK\DatabaseSpace\DbUserTable;
 use RzSDK\Log\DebugLog;
 
 ?>
 <?php
 class UserRegistration {
     public function __construct() {
+        /* DebugLog::log($_SERVER["HTTP_USER_AGENT"]);
+        DebugLog::log($_SERVER); */
         $this->execute();
     }
 
@@ -87,7 +92,11 @@ class UserRegistration {
         $dataModel = $userRegiRequestModel->toArrayKeyMapping($userRegiRequestModel);
         $userId = time();
         $dateTime = date("Y-m-d H:i:s");
-        $sqlQuery = "INSERT INTO user_registration VALUES("
+        $clientDevice = new ClientDevice();
+        /* DebugLog::log($_SERVER["HTTP_USER_AGENT"]);
+        DebugLog::log($_SERVER); */
+        $sqlTable = DbUserTable::$userRegistration;
+        $sqlQuery = "INSERT INTO {$sqlTable} VALUES("
         . "'" . $userId . "',"
         . " '" . $userRegiRequestModel->email . "',"
         . " " . true . ","
@@ -97,6 +106,11 @@ class UserRegistration {
         . " '" . $userRegiRequestModel->deviceType . "',"
         . " '" . $userRegiRequestModel->authType . "',"
         . " '" . $userRegiRequestModel->agentType . "',"
+        . " '" . $clientDevice->getOs() . "',"
+        . " '" . $clientDevice->getDevice() . "',"
+        . " '" . $clientDevice->getBrowser() . "',"
+        . " '" . ClientIp::ip() . "',"
+        . " '" . $clientDevice->getHttpAgent() . "',"
         . " '" . $userId . "',"
         . " '" . $userId . "',"
         . " '" . $dateTime . "',"
@@ -105,7 +119,8 @@ class UserRegistration {
         //echo $sqlQuery;
         $dbResult = $connection->query($sqlQuery);
         //logPrint($dbResult);
-        $sqlQuery = "INSERT INTO user VALUES("
+        $sqlTable = DbUserTable::$userInfo;
+        $sqlQuery = "INSERT INTO {$sqlTable} VALUES("
         . "'" . $userId . "',"
         . "'" . $userRegiRequestModel->email . "',"
         . " " . true . ","
@@ -118,7 +133,8 @@ class UserRegistration {
         $dbResult = $connection->query($sqlQuery);
         //https://reintech.io/blog/php-password-hashing-securely-storing-verifying-passwords
         $password = password_hash($userRegiRequestModel->password, PASSWORD_DEFAULT);
-        $sqlQuery = "INSERT INTO user_password VALUES("
+        $sqlTable = DbUserTable::$userPassword;
+        $sqlQuery = "INSERT INTO {$sqlTable} VALUES("
         . "'" . $userId . "',"
         . "'" . $password . "',"
         . " " . true . ","

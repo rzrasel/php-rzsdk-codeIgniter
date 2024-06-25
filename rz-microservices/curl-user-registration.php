@@ -3,6 +3,7 @@ namespace RzSDK\User\Registration;
 ?>
 <?php
 use RzSDK\Curl\Curl;
+use RzSDK\DatabaseSpace\UserRegistrationTable;
 use RzSDK\Log\DebugLog;
 ?>
 <?php
@@ -15,6 +16,7 @@ class CurlUserRegistration {
     public function __construct($url) {
         $this->url = $url;
         $this->execute();
+        //$this->example();
     }
 
     private function execute() {
@@ -43,9 +45,15 @@ class CurlUserRegistration {
     public function example() {
         //DebugLog::log(get_object_vars($this));
         //DebugLog::log(get_mangled_object_vars($this));
-        $result = array_intersect_key(get_object_vars($this), get_mangled_object_vars($this));
-        DebugLog::log($result);
+        /* $result = array_intersect_key(get_object_vars($this), get_mangled_object_vars($this));
+        DebugLog::log($result); */
         //$class_vars = get_class_vars(get_class($my_class));
+        $userRegistration = new UserRegistrationTable();
+        DebugLog::log($userRegistration->getColumn());
+        DebugLog::log($userRegistration->getColumnWithKey());
+        /* $inTest = $userRegistration->test;
+        DebugLog::log($userRegistration->$inTest());
+        DebugLog::log($userRegistration->{$userRegistration->test}()); */
     }
 }
 ?>
