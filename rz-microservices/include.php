@@ -4,6 +4,7 @@ namespace RzSDK\Import;
 <?php
 $baseInclude = "rz-sdk-library/";
 require_once($baseInclude . "curl/curl.php");
+require_once($baseInclude . "validation/email-validation.php");
 require_once($baseInclude . "database/sqlite-connection.php");
 require_once($baseInclude . "debug-log/debug-log.php");
 require_once($baseInclude . "detect-client/client-device.php");
@@ -21,6 +22,10 @@ require_once($baseInclude . "user-info-table.php");
 require_once($baseInclude . "user-info-table-query.php");
 require_once($baseInclude . "user-password-table.php");
 require_once($baseInclude . "user-password-table-query.php");
+?>
+<?php
+$baseInclude = "http-query/";
+require_once($baseInclude . "user-registration-request.php");
 ?>
 <?php
 $baseInclude = "user/";
