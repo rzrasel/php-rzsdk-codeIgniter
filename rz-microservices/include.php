@@ -25,6 +25,7 @@ require_once($baseInclude . "user-password-table-query.php");
 ?>
 <?php
 $baseInclude = "http-query/";
+require_once($baseInclude . "validation-type.php");
 require_once($baseInclude . "user-registration-request.php");
 ?>
 <?php

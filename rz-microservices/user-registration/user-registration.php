@@ -15,6 +15,8 @@ use RzSDK\Database\SqliteConnection;
 use RzSDK\Device\ClientDevice;
 use RzSDK\Device\ClientIp;
 use RzSDK\DatabaseSpace\DbUserTable;
+use RzSDK\HTTPRequest\ValidationType;
+use RzSDK\HTTPRequest\UserRegistrationRequest;
 use RzSDK\Log\DebugLog;
 
 ?>
@@ -26,8 +28,40 @@ class UserRegistration {
         $this->execute();
     }
 
+    public function reExecute() {
+        $userRegiRequest = new UserRegistrationRequest();
+        $regiParamList = $userRegiRequest->getQuery();
+        $userRegiRequestModel = new UserRegistrationRequestModel();
+        $keyMapping = $userRegiRequestModel->propertyKeyMapping();
+        $requestValue = array();
+        foreach($regiParamList as $value) {
+            if(array_key_exists($value, $_POST)) {
+                $paramValue = $_POST[$value];
+                $userRegiRequestModel->{$keyMapping[$value]} = $paramValue;
+                $requestValue[$value] = $paramValue;
+            } else {
+                //Error array key not exist, return
+            }
+            $method = $value . "_rules";
+            if(method_exists($userRegiRequest, $method)) {
+                $validationRules = $userRegiRequest->{$method}();
+                //DebugLog::log($validationRules);
+                foreach($validationRules as $rules) {
+                    if($rules == ValidationType::NOT_NULL) {
+                        echo "type not null";
+                    } else if($rules == ValidationType::EMAIL) {
+                        echo "type email";
+                    }
+                }
+            }
+        }
+        //DebugLog::log($userRegiRequestModel->deviceType);
+    }
+
     public function execute() {
         if(!empty($_POST)) {
+            $this->reExecute();
+            //
             $userRegiRequestModel = new UserRegistrationRequestModel();
             $userRegiRequestModel->agentType = $_POST[$userRegiRequestModel->agentType];
             $userRegiRequestModel->authType = $_POST[$userRegiRequestModel->authType];
